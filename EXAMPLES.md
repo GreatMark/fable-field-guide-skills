@@ -45,7 +45,7 @@ each with why-it-matters; ends with a paste-ready decision record.
 
 ## reference-hunt
 
-**Triggers:** "reference hunt", "照着这个实现", "find me a reference", "like this"
+**Triggers:** "reference hunt", "照着这个实现", "find me a reference"
 
 ```
 This Rust crate in vendor/rate-limiter implements the exact backoff behavior

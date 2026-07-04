@@ -1,0 +1,29 @@
+{
+  "description": "Fable Field Guide optional automation: deterministic skill triggering + opt-in merge gate. Both scripts are short, dependency-free POSIX shell and fail open.",
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PLUGIN_ROOT\"/hooks/trigger-sentinel.sh",
+            "timeout": 3
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "\"$CLAUDE_PLUGIN_ROOT\"/hooks/merge-gate.sh",
+            "timeout": 3
+          }
+        ]
+      }
+    ]
+  }
+}

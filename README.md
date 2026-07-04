@@ -122,6 +122,15 @@ git clone https://github.com/GreatMark/fable-field-guide-skills.git
 cp -R fable-field-guide-skills/skills/* ~/.claude/skills/
 ```
 
+## Hooks (Optional Automation)
+
+Installing the Claude Code plugin also registers two lightweight hooks — short, dependency-free POSIX shell scripts that fail open and never block your session (read them in [`hooks/`](./hooks/)):
+
+- **Trigger sentinel** (`UserPromptSubmit`, on by default) — when your prompt contains a high-precision trigger phrase ("blindspot pass", "盲区扫描", "interview me", "quiz me", …), it injects a one-line reminder so the matching skill fires deterministically, even with dozens of other skills installed. No match → no output, zero token overhead.
+- **Merge gate** (`PreToolUse` on Bash, **off by default**) — when enabled, a `git merge` / `gh pr merge` command triggers an advisory reminder of the field-guide rule: merge only after passing a change-quiz. It never blocks. Enable per shell with `export FABLE_MERGE_GATE=1`, or per project with `mkdir -p .claude && touch .claude/fable-merge-gate` (the marker is checked relative to the session's working directory).
+
+To turn all of this off, disable the plugin (`claude plugin disable fable-field-guide-skills`). The Cursor and plain-skills installs (Options B/C) never register hooks — there, skills trigger from their descriptions only.
+
 ## Key Insight
 
 From Thariq:

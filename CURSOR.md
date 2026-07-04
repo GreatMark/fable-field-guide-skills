@@ -32,3 +32,7 @@ One behavioral difference worth knowing: Claude Code surfaces skills through
 its `Skill` tool and shows the invocation in the transcript; Cursor matches
 on the description text and folds the skill into context silently. If a
 skill doesn't seem to fire in Cursor, use its trigger phrase verbatim.
+
+Note: the optional automation hooks in [`hooks/`](./hooks/) (trigger
+sentinel, merge gate) are Claude Code plugin features and do not apply to
+Cursor — copying the skills directory brings the skills only.

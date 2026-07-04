@@ -122,6 +122,15 @@ git clone https://github.com/GreatMark/fable-field-guide-skills.git
 cp -R fable-field-guide-skills/skills/* ~/.claude/skills/
 ```
 
+## Hooks(可选自动化)
+
+安装 Claude Code 插件的同时会注册两个轻量 hook——超短、零依赖的 POSIX shell 脚本,fail-open,绝不阻塞会话(源码见 [`hooks/`](./hooks/)):
+
+- **触发哨兵**(`UserPromptSubmit`,默认开启)—— 当你的消息包含高精度触发词("blindspot pass"、"盲区扫描"、"interview me"、"考考我"……)时,注入一行提醒,让对应 skill 确定性触发——即使你装了几十个其他 skill 也不会漏。未命中则零输出、零 token 开销。
+- **合并守门**(`PreToolUse` on Bash,**默认关闭**)—— 开启后,检测到 `git merge` / `gh pr merge` 命令时注入一条建议性提醒:实战指南的规矩是通过 change-quiz 才合并。仅提醒,绝不拦截。按 shell 开启:`export FABLE_MERGE_GATE=1`;按项目开启:`mkdir -p .claude && touch .claude/fable-merge-gate`(标记文件按会话工作目录相对路径检查)。
+
+想全部关掉:禁用插件即可(`claude plugin disable fable-field-guide-skills`)。Cursor 和纯 skills 安装方式(选项 B/C)不会注册任何 hook——那里 skill 只靠 description 触发。
+
 ## 核心洞察
 
 来自 Thariq:

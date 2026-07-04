@@ -6,14 +6,14 @@
   },
   "metadata": {
     "description": "Eight agent skills for finding your unknowns, derived from Thariq's 'A Field Guide to Fable'",
-    "version": "1.0.0"
+    "version": "1.1.0"
   },
   "plugins": [
     {
       "name": "fable-field-guide-skills",
       "source": "./",
       "description": "Find your unknowns before, during, and after implementation: blindspot-pass, design-directions, interview-me, reference-hunt, implementation-plan, implementation-notes, pitch-explainer, change-quiz",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "author": {
         "name": "GreatMark"
       },

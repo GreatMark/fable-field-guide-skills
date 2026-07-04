@@ -1,12 +1,19 @@
 {
   "name": "fable-field-guide-skills",
   "description": "Eight agent skills for finding your unknowns before, during, and after implementation, derived from Thariq's 'A Field Guide to Fable: Finding Your Unknowns'",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "author": {
     "name": "GreatMark"
   },
   "license": "MIT",
-  "keywords": ["unknowns", "workflow", "fable", "claude-code", "cursor", "field-guide"],
+  "keywords": [
+    "unknowns",
+    "workflow",
+    "fable",
+    "claude-code",
+    "cursor",
+    "field-guide"
+  ],
   "skills": [
     "./skills/blindspot-pass",
     "./skills/design-directions",
