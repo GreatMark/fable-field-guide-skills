@@ -6,10 +6,13 @@
 #
 # Off by default. Enable with either:
 #   export FABLE_MERGE_GATE=1                       (per shell)
-#   mkdir -p .claude && touch .claude/fable-merge-gate   (per project)
+#   mkdir -p .claude && touch .claude/fable-merge-gate   (Claude project)
+#   mkdir -p .codex && touch .codex/fable-merge-gate     (Codex project)
 # Fail-open: any error exits 0.
 
-[ "$FABLE_MERGE_GATE" = "1" ] || [ -f ".claude/fable-merge-gate" ] || exit 0
+[ "$FABLE_MERGE_GATE" = "1" ] || \
+  [ -f ".claude/fable-merge-gate" ] || \
+  [ -f ".codex/fable-merge-gate" ] || exit 0
 
 INPUT=$(head -c 65536 2>/dev/null) || exit 0
 

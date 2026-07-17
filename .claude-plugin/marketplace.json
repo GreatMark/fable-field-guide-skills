@@ -1,19 +1,18 @@
 {
   "name": "fable-field-guide",
-  "id": "fable-field-guide",
   "owner": {
     "name": "GreatMark"
   },
   "metadata": {
-    "description": "Eight agent skills for finding your unknowns, derived from Thariq's 'A Field Guide to Fable'",
-    "version": "1.1.0"
+    "description": "Eight agent skills for finding your unknowns, compatible with Claude Code, Cursor, and Codex with GPT-5.6 Sol",
+    "version": "1.2.0"
   },
   "plugins": [
     {
       "name": "fable-field-guide-skills",
       "source": "./",
       "description": "Find your unknowns before, during, and after implementation: blindspot-pass, design-directions, interview-me, reference-hunt, implementation-plan, implementation-notes, pitch-explainer, change-quiz",
-      "version": "1.1.0",
+      "version": "1.2.0",
       "author": {
         "name": "GreatMark"
       },
@@ -23,6 +22,8 @@
         "fable",
         "claude-code",
         "cursor",
+        "codex",
+        "gpt-5.6-sol",
         "field-guide"
       ],
       "category": "workflow"

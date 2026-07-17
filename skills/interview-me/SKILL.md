@@ -20,7 +20,7 @@ time, before any implementation.
    UX details > cosmetics. Sort by that impact.
 2. **Ask one question at a time.** Use the structured question tool when
    available. Every question must:
-   - Present 2-4 concrete options with their trade-offs, not an open-ended
+   - Present 2-3 concrete options with their trade-offs, not an open-ended
      "what do you want?".
    - Put a recommended option first, marked as recommended.
    - Say why the answer matters (what it would change).
