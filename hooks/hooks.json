@@ -1,5 +1,5 @@
 {
-  "description": "Fable Field Guide optional automation: deterministic skill triggering + opt-in merge gate. Both scripts are short, dependency-free POSIX shell and fail open.",
+  "description": "Fable Field Guide optional automation for Claude Code and Codex: deterministic skill triggering + opt-in merge gate. Both scripts are short, dependency-free POSIX shell and fail open.",
   "hooks": {
     "UserPromptSubmit": [
       {
@@ -7,7 +7,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"$CLAUDE_PLUGIN_ROOT\"/hooks/trigger-sentinel.sh",
+            "command": "\"${PLUGIN_ROOT:-$CLAUDE_PLUGIN_ROOT}\"/hooks/trigger-sentinel.sh",
             "timeout": 3
           }
         ]
@@ -19,7 +19,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "\"$CLAUDE_PLUGIN_ROOT\"/hooks/merge-gate.sh",
+            "command": "\"${PLUGIN_ROOT:-$CLAUDE_PLUGIN_ROOT}\"/hooks/merge-gate.sh",
             "timeout": 3
           }
         ]

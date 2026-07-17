@@ -2,7 +2,8 @@
 
 八个用于**寻找你的 unknowns** 的 agent skill,源自 Claude Code 团队成员 [Thariq (@trq212)](https://x.com/trq212) 的文章 [《A Field Guide to Fable: Finding Your Unknowns》](https://x.com/trq212/status/2073100352921215386)——关于如何与 Claude Fable 5 协作。
 
-同时支持 **Claude Code**(插件一键安装)和 **Cursor**(直接放入 `SKILL.md` 文件)。
+同时支持 **Claude Code**、**Codex 中的 GPT-5.6 Sol**(均可作为插件安装),以及
+**Cursor**(直接放入 `SKILL.md` 文件)。
 
 [English](./README.md) | 简体中文
 
@@ -104,7 +105,22 @@
 
 八个 skill 即可在你所有项目中使用。
 
-**选项 B:Cursor**
+**选项 B:Codex 插件 + GPT-5.6 Sol**
+
+将本仓库添加为 Codex marketplace,然后安装插件:
+
+```bash
+codex plugin marketplace add GreatMark/fable-field-guide-skills
+codex plugin add fable-field-guide-skills@fable-field-guide-codex
+```
+
+插件不会锁定当前模型。请在 Codex App 中选择 **Sol**,或用
+`codex -m gpt-5.6-sol` 启动 CLI,然后新建一个任务。你可以用
+`$blindspot-pass`、`$interview-me` 等名称显式调用 skill,也可以让 Codex
+根据请求自动匹配。模型选择、hook、更新方式和示例见
+[CODEX.zh.md](./CODEX.zh.md)。
+
+**选项 C:Cursor**
 
 Cursor 从 `~/.cursor/skills/` 加载 `SKILL.md`:
 
@@ -115,7 +131,7 @@ cp -R fable-field-guide-skills/skills/* ~/.cursor/skills/
 
 详见 [CURSOR.md](./CURSOR.md)。
 
-**选项 C:Claude Code 个人 skills(不走插件)**
+**选项 D:Claude Code 个人 skills(不走插件)**
 
 ```bash
 git clone https://github.com/GreatMark/fable-field-guide-skills.git
@@ -124,12 +140,14 @@ cp -R fable-field-guide-skills/skills/* ~/.claude/skills/
 
 ## Hooks(可选自动化)
 
-安装 Claude Code 插件的同时会注册两个轻量 hook——超短、零依赖的 POSIX shell 脚本,fail-open,绝不阻塞会话(源码见 [`hooks/`](./hooks/)):
+安装 Claude Code 或 Codex 插件时会同时注册两个轻量 hook——超短、零依赖的 POSIX shell 脚本,fail-open,绝不阻塞会话(源码见 [`hooks/`](./hooks/)):
 
 - **触发哨兵**(`UserPromptSubmit`,默认开启)—— 当你的消息包含高精度触发词("blindspot pass"、"盲区扫描"、"interview me"、"考考我"……)时,注入一行提醒,让对应 skill 确定性触发——即使你装了几十个其他 skill 也不会漏。未命中则零输出、零 token 开销。
-- **合并守门**(`PreToolUse` on Bash,**默认关闭**)—— 开启后,检测到 `git merge` / `gh pr merge` 命令时注入一条建议性提醒:实战指南的规矩是通过 change-quiz 才合并。仅提醒,绝不拦截。按 shell 开启:`export FABLE_MERGE_GATE=1`;按项目开启:`mkdir -p .claude && touch .claude/fable-merge-gate`(标记文件按会话工作目录相对路径检查)。
+- **合并守门**(`PreToolUse` on Bash,**默认关闭**)—— 开启后,检测到 `git merge` / `gh pr merge` 命令时注入一条建议性提醒:实战指南的规矩是通过 change-quiz 才合并。仅提醒,绝不拦截。按 shell 开启:`export FABLE_MERGE_GATE=1`;按项目开启时,Claude Code 使用 `.claude/fable-merge-gate`,Codex 使用 `.codex/fable-merge-gate`(标记文件按会话工作目录相对路径检查)。
 
-想全部关掉:禁用插件即可(`claude plugin disable fable-field-guide-skills`)。Cursor 和纯 skills 安装方式(选项 B/C)不会注册任何 hook——那里 skill 只靠 description 触发。
+Codex 会要求你在首次运行新安装的 command hook 前进行审核;可用 `/hooks`
+检查并信任它们。想全部关掉,在对应宿主中禁用插件即可。Cursor 和纯 skills
+安装方式(选项 C/D)不会注册任何 hook——那里 skill 只靠 description 触发。
 
 ## 核心洞察
 
@@ -153,7 +171,7 @@ cp -R fable-field-guide-skills/skills/* ~/.claude/skills/
 ## 致谢与声明
 
 - 方法论及全部引文:[Thariq (@trq212)](https://x.com/trq212),[《A Field Guide to Fable: Finding Your Unknowns》](https://x.com/trq212/status/2073100352921215386)(2026 年 7 月)。引用已注明出处;本页引文为中文翻译,英文原文见 [README.md](./README.md)。
-- 这是社区项目,与 Anthropic 及原文作者无关联、未获其背书。Claude 与 Fable 是 Anthropic 的商标。
+- 这是社区项目,与 Anthropic、OpenAI 及原文作者无关联、未获其背书。Claude 与 Fable 是 Anthropic 的商标;ChatGPT、Codex 与 GPT 是 OpenAI 的商标。
 
 ## 许可
 

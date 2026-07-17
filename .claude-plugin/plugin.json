@@ -1,7 +1,7 @@
 {
   "name": "fable-field-guide-skills",
   "description": "Eight agent skills for finding your unknowns before, during, and after implementation, derived from Thariq's 'A Field Guide to Fable: Finding Your Unknowns'",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "author": {
     "name": "GreatMark"
   },
@@ -12,6 +12,8 @@
     "fable",
     "claude-code",
     "cursor",
+    "codex",
+    "gpt-5.6-sol",
     "field-guide"
   ],
   "skills": [

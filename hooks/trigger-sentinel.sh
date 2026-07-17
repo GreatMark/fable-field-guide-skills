@@ -3,7 +3,8 @@
 #
 # Scans the user prompt for high-precision trigger phrases and injects a
 # one-line reminder so the matching skill fires deterministically, even when
-# many skills are installed. No match -> no output, zero token overhead.
+# many skills are installed. Works in Claude Code and Codex. No match -> no
+# output, zero token overhead.
 # Fail-open: any error exits 0 and never blocks the session.
 
 # Scan at most the first 64 KB: trigger phrases appear at the start of a
@@ -67,5 +68,5 @@ matches=${matches# }
 
 # Invariant: the format string below must never contain user data — only
 # $matches (a closed set of hardcoded skill names) is interpolated.
-printf '{"hookSpecificOutput":{"hookEventName":"UserPromptSubmit","additionalContext":"[FIELD GUIDE] Trigger phrase detected. Before responding, invoke the matching skill(s) via the Skill tool: %s"}}\n' "$matches"
+printf '{"hookSpecificOutput":{"hookEventName":"UserPromptSubmit","additionalContext":"[FIELD GUIDE] Trigger phrase detected. Before responding, load and follow the matching installed skill(s): %s"}}\n' "$matches"
 exit 0

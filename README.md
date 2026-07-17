@@ -2,7 +2,8 @@
 
 Eight agent skills for **finding your unknowns**, derived from [Thariq (@trq212)](https://x.com/trq212)'s article ["A Field Guide to Fable: Finding Your Unknowns"](https://x.com/trq212/status/2073100352921215386) — written by a member of the Claude Code team about working with Claude Fable 5.
 
-Works with **Claude Code** (installable plugin) and **Cursor** (drop-in `SKILL.md` files).
+Works with **Claude Code** and **Codex with GPT-5.6 Sol** (installable plugins),
+plus **Cursor** (drop-in `SKILL.md` files).
 
 English | [简体中文](./README.zh.md)
 
@@ -104,7 +105,22 @@ Then install the plugin:
 
 All eight skills become available across your projects.
 
-**Option B: Cursor**
+**Option B: Codex plugin with GPT-5.6 Sol**
+
+Add this repository as a Codex marketplace, then install the plugin:
+
+```bash
+codex plugin marketplace add GreatMark/fable-field-guide-skills
+codex plugin add fable-field-guide-skills@fable-field-guide-codex
+```
+
+Plugins do not pin the active model. Select **Sol** in the Codex app or launch
+the CLI with `codex -m gpt-5.6-sol`, then start a new task. Invoke a skill
+explicitly with `$blindspot-pass`, `$interview-me`, and so on, or let Codex
+match it from the request. See [CODEX.md](./CODEX.md) for model selection,
+hooks, updates, and examples.
+
+**Option C: Cursor**
 
 Cursor loads `SKILL.md` files from `~/.cursor/skills/`:
 
@@ -115,7 +131,7 @@ cp -R fable-field-guide-skills/skills/* ~/.cursor/skills/
 
 See [CURSOR.md](./CURSOR.md) for details.
 
-**Option C: Claude Code personal skills (no plugin)**
+**Option D: Claude Code personal skills (no plugin)**
 
 ```bash
 git clone https://github.com/GreatMark/fable-field-guide-skills.git
@@ -124,12 +140,15 @@ cp -R fable-field-guide-skills/skills/* ~/.claude/skills/
 
 ## Hooks (Optional Automation)
 
-Installing the Claude Code plugin also registers two lightweight hooks — short, dependency-free POSIX shell scripts that fail open and never block your session (read them in [`hooks/`](./hooks/)):
+Installing the Claude Code or Codex plugin also registers two lightweight hooks — short, dependency-free POSIX shell scripts that fail open and never block your session (read them in [`hooks/`](./hooks/)):
 
 - **Trigger sentinel** (`UserPromptSubmit`, on by default) — when your prompt contains a high-precision trigger phrase ("blindspot pass", "盲区扫描", "interview me", "quiz me", …), it injects a one-line reminder so the matching skill fires deterministically, even with dozens of other skills installed. No match → no output, zero token overhead.
-- **Merge gate** (`PreToolUse` on Bash, **off by default**) — when enabled, a `git merge` / `gh pr merge` command triggers an advisory reminder of the field-guide rule: merge only after passing a change-quiz. It never blocks. Enable per shell with `export FABLE_MERGE_GATE=1`, or per project with `mkdir -p .claude && touch .claude/fable-merge-gate` (the marker is checked relative to the session's working directory).
+- **Merge gate** (`PreToolUse` on Bash, **off by default**) — when enabled, a `git merge` / `gh pr merge` command triggers an advisory reminder of the field-guide rule: merge only after passing a change-quiz. It never blocks. Enable per shell with `export FABLE_MERGE_GATE=1`, or per project with `.claude/fable-merge-gate` for Claude Code and `.codex/fable-merge-gate` for Codex (the marker is checked relative to the session's working directory).
 
-To turn all of this off, disable the plugin (`claude plugin disable fable-field-guide-skills`). The Cursor and plain-skills installs (Options B/C) never register hooks — there, skills trigger from their descriptions only.
+Codex asks you to review newly installed command hooks before it runs them;
+inspect and trust them with `/hooks`. To turn all of this off, disable the
+plugin in its host. The Cursor and plain-skills installs (Options C/D) never
+register hooks — there, skills trigger from their descriptions only.
 
 ## Key Insight
 
@@ -153,7 +172,7 @@ In the same spirit as [andrej-karpathy-skills](https://github.com/multica-ai/and
 ## Credits & Disclaimer
 
 - Methodology and all quoted text: [Thariq (@trq212)](https://x.com/trq212), ["A Field Guide to Fable: Finding Your Unknowns"](https://x.com/trq212/status/2073100352921215386) (July 2026). Quoted under fair use with attribution.
-- This is a community project, not affiliated with or endorsed by Anthropic or the article's author. Claude and Fable are trademarks of Anthropic.
+- This is a community project, not affiliated with or endorsed by Anthropic, OpenAI, or the article's author. Claude and Fable are trademarks of Anthropic; ChatGPT, Codex, and GPT are trademarks of OpenAI.
 
 ## License
 
