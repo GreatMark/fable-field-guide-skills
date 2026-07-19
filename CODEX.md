@@ -2,7 +2,7 @@
 
 [简体中文](./CODEX.zh.md)
 
-The eight skills are model-independent natural-language workflows. The Codex
+The nine skills are model-independent natural-language workflows. The Codex
 plugin packages the same source files used by Claude Code and Cursor; it does
 not maintain a separate Codex copy.
 
@@ -29,7 +29,7 @@ codex -m gpt-5.6-sol
 
 The skills use progressive disclosure: Codex initially sees their names and
 descriptions, then loads only the matching `SKILL.md`. This keeps GPT-5.6
-prompts lean instead of injecting all eight workflows into every task.
+prompts lean instead of injecting all nine workflows into every task.
 
 ## Invoke a skill
 

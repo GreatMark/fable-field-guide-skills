@@ -1,6 +1,6 @@
 # Fable Field Guide Skills
 
-Eight agent skills for **finding your unknowns**, derived from [Thariq (@trq212)](https://x.com/trq212)'s article ["A Field Guide to Fable: Finding Your Unknowns"](https://x.com/trq212/status/2073100352921215386) — written by a member of the Claude Code team about working with Claude Fable 5.
+Eight agent skills plus a `field-guide` router for **finding your unknowns**, derived from [Thariq (@trq212)](https://x.com/trq212)'s article ["A Field Guide to Fable: Finding Your Unknowns"](https://x.com/trq212/status/2073100352921215386) — written by a member of the Claude Code team about working with Claude Fable 5.
 
 Works with **Claude Code** and **Codex with GPT-5.6 Sol** (installable plugins),
 plus **Cursor** (drop-in `SKILL.md` files).
@@ -32,10 +32,11 @@ The article breaks a problem down four ways:
 
 ## The Solution
 
-Eight skills, one per technique in the article, covering the full lifecycle:
+Eight workflow skills, one per technique in the article, plus a `field-guide` router — nine skills on disk, covering the full lifecycle:
 
 | Phase | Skill | Unknowns it hunts |
 |-------|-------|-------------------|
+| Entry point | [`field-guide`](skills/field-guide/SKILL.md) | Not sure which skill applies — routes you to the right one |
 | Pre-implementation | [`blindspot-pass`](skills/blindspot-pass/SKILL.md) | Unknown Unknowns — what you didn't know to ask |
 | Pre-implementation | [`design-directions`](skills/design-directions/SKILL.md) | Unknown Knowns — taste you can only articulate on sight |
 | Pre-implementation | [`interview-me`](skills/interview-me/SKILL.md) | Known Unknowns — ambiguities you know you haven't resolved |
@@ -47,7 +48,13 @@ Eight skills, one per technique in the article, covering the full lifecycle:
 
 *The quadrant tags are our mapping — the article doesn't assign a quadrant to every technique.* For trigger phrases and expected behavior per skill, see [EXAMPLES.md](./EXAMPLES.md).
 
-## The Eight Skills in Detail
+## The Skills in Detail
+
+### Entry point
+
+**`field-guide`** — the router: not sure which of the eight applies? It maps "what kind of unknown is blocking you" to the right skill and defines the shared artifact contract (`interview-decisions.md`, `porting-checklist.md`, `implementation-plan.md`, `implementation-notes.md`, `change-report.html`, `pitch-<topic>.html`, `./design-directions/`).
+
+> "I have all these finding-unknowns skills installed — which one fits where I'm stuck right now?"
 
 ### Pre-implementation
 
@@ -103,7 +110,7 @@ Then install the plugin:
 /plugin install fable-field-guide-skills@fable-field-guide
 ```
 
-All eight skills become available across your projects.
+All nine skills become available across your projects.
 
 **Option B: Codex plugin with GPT-5.6 Sol**
 
@@ -138,6 +145,12 @@ git clone https://github.com/GreatMark/fable-field-guide-skills.git
 cp -R fable-field-guide-skills/skills/* ~/.claude/skills/
 ```
 
+**First words after installing** — try one of these in a fresh session:
+
+- "field guide" — see the whole toolbox and where each skill fits
+- "我刚接手这块代码，帮我看看有什么坑" — a blindspot pass on unfamiliar ground
+- "考考我这轮改动" — a change quiz before you merge
+
 ## Hooks (Optional Automation)
 
 Installing the Claude Code or Codex plugin also registers two lightweight hooks — short, dependency-free POSIX shell scripts that fail open and never block your session (read them in [`hooks/`](./hooks/)):
@@ -148,7 +161,10 @@ Installing the Claude Code or Codex plugin also registers two lightweight hooks 
 Codex asks you to review newly installed command hooks before it runs them;
 inspect and trust them with `/hooks`. To turn all of this off, disable the
 plugin in its host. The Cursor and plain-skills installs (Options C/D) never
-register hooks — there, skills trigger from their descriptions only.
+register hooks automatically — skills there trigger from their descriptions;
+the merge gate additionally has a manual Cursor port under
+[`hooks/cursor/`](./hooks/cursor/) (advisory, with a quiz-passed marker), see
+[CURSOR.md](./CURSOR.md).
 
 ## Key Insight
 
@@ -168,6 +184,16 @@ These skills are not a pipeline to run every time — they're a toolbox. The art
 ## How This Repo Was Made
 
 In the same spirit as [andrej-karpathy-skills](https://github.com/multica-ai/andrej-karpathy-skills) (which distilled Karpathy's observations on LLM coding pitfalls into an installable skill), this repo distills Thariq's field guide into installable skills. The skills themselves were drafted by pointing a coding agent at the article and asking it to turn each technique into a `SKILL.md` — then reviewed and iterated by a human. Techniques from the article, packaging by us, mistakes ours.
+
+## Maintainer Notes
+
+Five things to know before editing these skills — each guards against a plausible "improvement" that would quietly break behavior:
+
+1. **Descriptions are routing; trigger phrases are behavior, not copy.** The quoted English/Chinese phrases are what real users actually say — trimming them for brevity changes routing, and no test will catch it. Before editing a description, check the family's "Not for" mutual-exclusion boundaries (interview-me ↔ blindspot-pass, design-directions ↔ reference-hunt, change-quiz ↔ tests, pitch-explainer ↔ neutral docs). `PROACTIVELY` in implementation-notes is deliberately uppercase — don't normalize it.
+2. **`git rev-parse --git-path info/exclude` is worktree correctness, not verbosity.** In a worktree, `.git` is a file, so the literal path `.git/info/exclude` fails. Don't "simplify" the long exclude commands. The fallback semantics everywhere is: degrade to leaving the artifact untracked and tell the user — no code path may fail the flow.
+3. **Artifact names and locations are the cross-skill interface; renaming one breaks the chain.** `implementation-plan.md` feeds implementation-notes' Context; `interview-decisions.md` feeds implementation-plan step 1; `./design-directions/` feeds the plan and pitch collection steps. Rename only family-wide. `info/exclude` (rather than `.gitignore`) is deliberate: it keeps the repo diff clean and doesn't impose a personal workflow on collaborators.
+4. **Family arithmetic: 8 member skills + 1 index = 9 directories on disk.** field-guide is the index, not a lifecycle stage; its routing table's row order *is* the lifecycle order ("prefer the earlier row" relies on that); design-directions vs reference-hunt is a fork on "do you have a concrete reference", not a sequence.
+5. **Two hosts, two hook surfaces.** `hooks/` (hooks.json, trigger-sentinel.sh, merge-gate.sh) serves the Claude Code and Codex plugins only; Cursor never loads it. The Cursor merge gate is a manual port under `hooks/cursor/` (advisory, quiz-passed marker, installed by hand per CURSOR.md). Fail-open is a design invariant on both: every error path allows the command. Cursor-specific wording inside skills (AskQuestion card, Plan mode, canvas) must stay conditional so other hosts degrade gracefully.
 
 ## Credits & Disclaimer
 

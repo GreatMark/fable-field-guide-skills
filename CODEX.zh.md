@@ -2,7 +2,7 @@
 
 [English](./CODEX.md)
 
-这八个 skill 是与模型无关的自然语言工作流。Codex 插件直接复用 Claude
+这九个 skill 是与模型无关的自然语言工作流。Codex 插件直接复用 Claude
 Code 与 Cursor 使用的同一套源文件,不会维护一份单独的 Codex 副本。
 
 ## 安装
@@ -26,7 +26,7 @@ codex -m gpt-5.6-sol
 ```
 
 这些 skill 使用渐进式披露:Codex 开始时只看到名称与 description,只有匹配
-任务后才加载对应的 `SKILL.md`。这样不会在每个任务中一次性注入八套工作流,
+任务后才加载对应的 `SKILL.md`。这样不会在每个任务中一次性注入九套工作流,
 能保持 GPT-5.6 的 prompt 精简。
 
 ## 调用 skill
