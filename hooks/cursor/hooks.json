@@ -1,0 +1,12 @@
+{
+  "version": 1,
+  "hooks": {
+    "beforeShellExecution": [
+      {
+        "command": "bash hooks/fable-merge-gate.sh",
+        "matcher": "git merge|gh pr merge",
+        "timeout": 5
+      }
+    ]
+  }
+}

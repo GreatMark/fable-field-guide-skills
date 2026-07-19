@@ -36,5 +36,29 @@ Codex loads matching skills progressively and supports explicit `$skill-name`
 invocation; see [CODEX.md](./CODEX.md).
 
 Note: the optional automation hooks in [`hooks/`](./hooks/) (trigger
-sentinel, merge gate) are Claude Code and Codex plugin features and do not
-apply to Cursor — copying the skills directory brings the skills only.
+sentinel, merge gate) are Claude Code and Codex plugin features and are not
+picked up by Cursor — copying the skills directory brings the skills only.
+The merge gate has a manual Cursor port; see below.
+
+## Optional: Cursor merge-gate hook
+
+[`hooks/cursor/`](./hooks/cursor/) contains a Cursor port of the merge gate:
+a `beforeShellExecution` hook that watches for `git merge` / `gh pr merge`
+and, when `change-report.html` (the change-quiz artifact) exists at the
+project root, reminds the agent that the field-guide rule is to pass the
+quiz before merging. Advisory only — it never blocks, and any error fails
+open. It needs `jq` at runtime; without it the hook allows everything
+silently.
+
+To install:
+
+```bash
+mkdir -p ~/.cursor/hooks
+cp hooks/cursor/fable-merge-gate.sh ~/.cursor/hooks/fable-merge-gate.sh
+```
+
+Then merge the `beforeShellExecution` entry from
+[`hooks/cursor/hooks.json`](./hooks/cursor/hooks.json) into your
+`~/.cursor/hooks.json` — or copy the file as-is if you don't have one. The
+`command` path is relative to `~/.cursor/`, which is where user-level hooks
+run from. Restart Cursor to pick up the hook.
