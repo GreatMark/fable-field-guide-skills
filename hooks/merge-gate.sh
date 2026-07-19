@@ -9,6 +9,9 @@
 #   mkdir -p .claude && touch .claude/fable-merge-gate   (Claude project)
 #   mkdir -p .codex && touch .codex/fable-merge-gate     (Codex project)
 # Fail-open: any error exits 0.
+#
+# Cursor port: hooks/cursor/ carries a manually installed variant that keys
+# off change-report.html and goes quiet after a FIELD-GUIDE-QUIZ-PASSED marker.
 
 [ "$FABLE_MERGE_GATE" = "1" ] || \
   [ -f ".claude/fable-merge-gate" ] || \
