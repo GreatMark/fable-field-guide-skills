@@ -1,7 +1,7 @@
 {
   "name": "fable-field-guide-skills",
-  "version": "1.2.0",
-  "description": "Eight focused skills for surfacing unknowns before, during, and after agentic implementation work",
+  "version": "1.3.0",
+  "description": "Eight focused skills plus a field-guide router for surfacing unknowns before, during, and after agentic implementation work",
   "author": {
     "name": "GreatMark",
     "url": "https://github.com/GreatMark"
@@ -21,7 +21,7 @@
   "interface": {
     "displayName": "Fable Field Guide Skills",
     "shortDescription": "Find costly unknowns before they become rework",
-    "longDescription": "Eight reusable workflows for surfacing unknowns before, during, and after agentic implementation work, packaged for Codex and tuned for GPT-5.6 Sol.",
+    "longDescription": "Eight reusable workflows plus a field-guide router that picks the right one, for surfacing unknowns before, during, and after agentic implementation work, packaged for Codex and tuned for GPT-5.6 Sol.",
     "developerName": "GreatMark",
     "category": "Developer Tools",
     "capabilities": [

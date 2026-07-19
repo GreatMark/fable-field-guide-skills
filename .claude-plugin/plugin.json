@@ -1,7 +1,7 @@
 {
   "name": "fable-field-guide-skills",
-  "description": "Eight agent skills for finding your unknowns before, during, and after implementation, derived from Thariq's 'A Field Guide to Fable: Finding Your Unknowns'",
-  "version": "1.2.0",
+  "description": "Eight agent skills plus a field-guide router for finding your unknowns before, during, and after implementation, derived from Thariq's 'A Field Guide to Fable: Finding Your Unknowns'",
+  "version": "1.3.0",
   "author": {
     "name": "GreatMark"
   },
@@ -17,6 +17,7 @@
     "field-guide"
   ],
   "skills": [
+    "./skills/field-guide",
     "./skills/blindspot-pass",
     "./skills/design-directions",
     "./skills/interview-me",
