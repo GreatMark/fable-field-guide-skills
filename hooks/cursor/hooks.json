@@ -4,7 +4,7 @@
     "beforeShellExecution": [
       {
         "command": "bash hooks/fable-merge-gate.sh",
-        "matcher": "git merge|gh pr merge",
+        "matcher": "\\bmerge\\b",
         "timeout": 5
       }
     ]
